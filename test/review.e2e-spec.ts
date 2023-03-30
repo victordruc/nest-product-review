@@ -1,9 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
+import { Types, disconnect } from 'mongoose';
+
 import { AppModule } from './../src/app.module';
 import { CreateReviewDto } from '../src/review/dto/create-review.dto';
-import { Types, disconnect } from 'mongoose';
 import { REVIEW_NOT_FOUND } from '../src/review/review.constants';
 import { AuthDto } from '../src/auth/dto/auth.dto';
 
@@ -82,7 +83,6 @@ describe('AppController (e2e)', () => {
   });
 
   it('/review/:id (DELETE) - success', () => {
-    console.log(token)
     return request(app.getHttpServer())
       .delete('/review/' + createdId)
       .set('Authorization', `Bearer ${token}`)
