@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  UseFilters,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
@@ -16,11 +17,13 @@ import { TopPageService } from './top-page.service';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
 import { TOP_PAGE_NOT_FOUND_ERROR } from './top-page.constants';
 import { IDValidationPipe } from 'src/pipes/id-validation.pipe';
+import { MongoExceptionFilter } from 'src/filters/mongo-exception.filter';
 
 @Controller('top-page')
 export class TopPageController {
   constructor(private readonly topPageService: TopPageService) {}
 
+  @UseFilters(MongoExceptionFilter)
   @UsePipes(new ValidationPipe())
   @Post('create')
   async create(@Body() dto: CreateTopPageDto) {
